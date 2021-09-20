@@ -7,9 +7,9 @@ import openfl.ui.Keyboard;
 import openfl.events.KeyboardEvent;
 import Replay.Ana;
 import Replay.Analysis;
-#if cpp
+/*#if cpp
 import webm.WebmPlayer;
-#end
+#end*/
 import flixel.input.keyboard.FlxKey;
 import haxe.Exception;
 import openfl.geom.Matrix;
@@ -1068,6 +1068,14 @@ class PlayState extends MusicBeatState
 
 		#if mobileC
 			mcontrols = new Mobilecontrols();
+			switch (mcontrols.mode)
+			{
+				case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
+					controls.setVirtualPad(mcontrols._virtualPad, FULL, NONE);
+				case HITBOX:
+					controls.setHitBox(mcontrols._hitbox);
+				default:
+			}
 			trackedinputs = controls.trackedinputs;
 			controls.trackedinputs = [];
 
@@ -1076,7 +1084,8 @@ class PlayState extends MusicBeatState
 			camcontrol.bgColor.alpha = 0;
 			mcontrols.cameras = [camcontrol];
 
-			mcontrols.visible = false;
+			//mcontrols.visible = false;
+			mcontrols.alpha = 0;
 
 			add(mcontrols);
 		#end
@@ -1246,7 +1255,17 @@ class PlayState extends MusicBeatState
 	function startCountdown():Void
 	{
 		#if mobileC
-		mcontrols.visible = true;
+		//mcontrols.visible = true;
+		new FlxTimer().start(0.1, function(tmr:FlxTimer)
+		{
+			mcontrols.alpha += 0.1;
+			if (mcontrols.alpha != 0.7){
+				tmr.reset(0.1);
+			}
+			else{
+				trace('aweseom.');
+			}
+		});
 		#end
 
 		inCutscene = false;
@@ -1389,7 +1408,7 @@ class PlayState extends MusicBeatState
 		return null;
 	}
 
-	private function handleInput(evt:KeyboardEvent):Void { // this actually handles press inputs
+	public function handleInput(evt:KeyboardEvent):Void { // this actually handles press inputs
 
 		if (PlayStateChangeables.botPlay || loadRep || paused)
 			return;
@@ -2681,7 +2700,17 @@ class PlayState extends MusicBeatState
 	function endSong():Void
 	{
 		#if mobileC
-		mcontrols.visible = false;
+		//aaa
+		new FlxTimer().start(0.1, function(tmr:FlxTimer)
+		{
+			mcontrols.alpha -= 0.1;
+			if (mcontrols.alpha != 0){
+				tmr.reset(0.1);
+			}
+			else{
+				trace('aweseom.');
+			}
+		});
 		#end
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);

@@ -132,9 +132,9 @@ class OptionsMenu extends MusicBeatState
 
 		if (acceptInput)
 		{
-			if (controls.BACK && !isCat)
+			if (controls.BACK #if android || FlxG.android.justReleased.BACK #end && !isCat)
 				FlxG.switchState(new MainMenuState());
-			else if (controls.BACK)
+			else if (controls.BACK #if android || FlxG.android.justReleased.BACK #end)
 			{
 				isCat = false;
 				grpControls.clear();

@@ -65,7 +65,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			endBullshit();
 		}
 
-		if (controls.BACK)
+		if (controls.BACK  #if android || FlxG.android.justReleased.BACK #end)
 		{
 			FlxG.sound.music.stop();
 

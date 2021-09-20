@@ -440,7 +440,7 @@ class ModchartState
 	
 				// hud/camera
 
-				Lua_helper.add_callback(lua,"initBackgroundVideo", function(videoName:String) {
+				/*Lua_helper.add_callback(lua,"initBackgroundVideo", function(videoName:String) {
 					trace('playing assets/videos/' + videoName + '.webm');
 					PlayState.instance.backgroundVideo("assets/videos/" + videoName + ".webm");
 				});
@@ -473,7 +473,7 @@ class ModchartState
 				
 				Lua_helper.add_callback(lua,"setVideoSpriteScale", function(scale:Float) {
 					PlayState.instance.videoSprite.setGraphicSize(Std.int(PlayState.instance.videoSprite.width * scale));
-				});
+				});*/
 	
 				Lua_helper.add_callback(lua,"setHudAngle", function (x:Float) {
 					PlayState.instance.camHUD.angle = x;

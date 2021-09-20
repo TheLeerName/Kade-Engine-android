@@ -1,5 +1,6 @@
 package;
 
+import openfl.events.KeyboardEvent;
 import flixel.input.gamepad.FlxGamepad;
 import openfl.Lib;
 #if windows
@@ -22,7 +23,7 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', 'debug menu', 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -211,6 +212,27 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.instance.removedVideo = true;
 					}*/
 					FlxG.resetState();
+				case "debug menu":
+					/*if (useVideo)
+					{
+					GlobalVideo.get().stop();
+					remove(videoSprite);
+					FlxG.stage.window.onFocusOut.remove(focusOut);
+					FlxG.stage.window.onFocusIn.remove(focusIn);
+					removedVideo = true;
+					}*/
+					#if windows
+					DiscordClient.changePresence("Chart Editor", null, null, true);
+					#end
+					FlxG.switchState(new ChartingState());
+					//FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
+					#if windows
+					if (luaModchart != null)
+					{
+						luaModchart.die();
+						luaModchart = null;
+					}
+					#end
 				case "Exit to menu":
 					/*if (PlayState.instance.useVideo)
 					{
