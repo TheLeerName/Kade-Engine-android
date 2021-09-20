@@ -33,7 +33,7 @@ class OptionsMenu extends MusicBeatState
 			new Judgement("Customize your Hit Timings. (LEFT or RIGHT)"),
 			/*#if desktop
 			new FPSCapOption("Cap your FPS."),
-			#end/*
+			#end*/
 			new ScrollSpeedOption("Change your scroll speed. (1 = Chart dependent)"),
 			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			new ResetButtonOption("Toggle pressing R to gameover."),
@@ -57,7 +57,7 @@ class OptionsMenu extends MusicBeatState
 			/*#if desktop
 			new FPSOption("Toggle the FPS Counter."),
 			new ReplayOption("View replays..."),
-			#end/*
+			#end*/
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
 			new WatermarkOption("Enable and disable all watermarks from the engine."),
 			new ScoreScreen("Show the score screen after the end of a song."),
