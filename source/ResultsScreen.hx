@@ -18,7 +18,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import io.newgrounds.NG;
 import lime.app.Application;
 import lime.utils.Assets;
 import flixel.math.FlxMath;
@@ -28,7 +27,7 @@ import flixel.input.FlxKeyManager;
 
 using StringTools;
 
-class ResultsScreen extends FlxSubState
+class ResultsScreen extends MusicBeatSubstate
 {
     public var background:FlxSprite;
     public var text:FlxText;
@@ -158,6 +157,10 @@ class ResultsScreen extends FlxSubState
         }});
 
         cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
+        #if mobileC
+        addVirtualPad(NONE, A);
+        #end
 
 		super.create();
 	}

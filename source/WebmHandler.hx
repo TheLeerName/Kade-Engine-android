@@ -1,3 +1,4 @@
+/*
 package;
 
 import flixel.FlxG;
@@ -167,3 +168,4 @@ class WebmHandler
 	}
 	#end
 }
+*/
