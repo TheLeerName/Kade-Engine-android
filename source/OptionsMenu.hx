@@ -26,40 +26,41 @@ class OptionsMenu extends MusicBeatState
 
 	var options:Array<OptionCategory> = [
 		new OptionCategory("Gameplay", [
-			new CustomControls("Edit a mobile controls"),
+			new CustomControls("Edit a mobile controls..."),
 			new DFJKOption(controls),
 			new DownscrollOption("Change the layout of the strumline."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
-			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
-			#if desktop
-			new FPSCapOption("Cap your FPS"),
-			#end
-			new ScrollSpeedOption("Change your scroll speed (1 = Chart dependent)"),
+			new Judgement("Customize your Hit Timings. (LEFT or RIGHT)"),
+			/*#if desktop
+			new FPSCapOption("Cap your FPS."),
+			#end/*
+			new ScrollSpeedOption("Change your scroll speed. (1 = Chart dependent)"),
 			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			new ResetButtonOption("Toggle pressing R to gameover."),
 			// new OffsetMenu("Get a note offset based off of your inputs!"),
-			new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference")
+			new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference.")
 		]),
 		new OptionCategory("Appearance", [
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new CamZoomOption("Toggle the camera zoom in-game."),
-			#if desktop
-			new RainbowFPSOption("Make the FPS Counter Rainbow"),
+			//#if desktop
+			//new RainbowFPSOption("Make the FPS Counter Rainbow."),
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
-			new SongPositionOption("Show the songs current position (as a bar)"),
-			new CpuStrums("CPU's strumline lights up when a note hits it."),
-			#end
+			new SongPositionOption("Show the songs current position. (as a bar)"),
+			//new CpuStrums("CPU's strumline lights up when a note hits it."),
+			//#end
 		]),
 		
 		new OptionCategory("Misc", [
-			#if desktop
-			new FPSOption("Toggle the FPS Counter"),
-			new ReplayOption("View replays"),
-			#end
+			new About("About android port..."),
+			/*#if desktop
+			new FPSOption("Toggle the FPS Counter."),
+			new ReplayOption("View replays..."),
+			#end/*
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
 			new WatermarkOption("Enable and disable all watermarks from the engine."),
-			new ScoreScreen("Show the score screen after the end of a song"),
+			new ScoreScreen("Show the score screen after the end of a song."),
 			new ShowInput("Display every single input in the score screen."),
 			new Optimization("No backgrounds, no characters, centered notes, no player 2."),
 			new BotPlay("Showcase your charts and mods with autoplay."),
