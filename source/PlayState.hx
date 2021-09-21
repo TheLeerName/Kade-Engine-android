@@ -265,7 +265,7 @@ class PlayState extends MusicBeatState
 		PlayStateChangeables.safeFrames = FlxG.save.data.frames;
 		PlayStateChangeables.scrollSpeed = FlxG.save.data.scrollSpeed;
 		PlayStateChangeables.botPlay = FlxG.save.data.botplay;
-		PlayStateChangeables.Optimize = FlxG.save.data.optimize;
+		//PlayStateChangeables.Optimize = FlxG.save.data.optimize;
 
 		// pre lowercasing the song name (create)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
@@ -278,8 +278,8 @@ class PlayState extends MusicBeatState
 
 		#if windows
 		executeModchart = FileSystem.exists(Paths.lua(songLowercase  + "/modchart"));
-		if (executeModchart)
-			PlayStateChangeables.Optimize = false;
+		/*if (executeModchart)
+			PlayStateChangeables.Optimize = false;*/
 		#end
 		#if !cpp
 		executeModchart = false; // FORCE disable for non cpp targets
@@ -386,7 +386,7 @@ class PlayState extends MusicBeatState
 			}
 		} else {stageCheck = SONG.stage;}
 
-		if (!PlayStateChangeables.Optimize)
+		if (FlxG.save.data.bg)
 		{
 
 		switch(stageCheck)
@@ -882,7 +882,7 @@ class PlayState extends MusicBeatState
 				gf.y += 300;
 		}
 
-		if (!PlayStateChangeables.Optimize)
+		if (FlxG.save.data.char)
 		{
 			add(gf);
 
@@ -1628,7 +1628,8 @@ class PlayState extends MusicBeatState
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 
-				if (!gottaHitNote && PlayStateChangeables.Optimize)
+				// if you hide these two lines, then the opponent arrows will go right in the same place as yours
+				if (!gottaHitNote && FlxG.save.data.middlescroll)
 					continue;
 
 				swagNote.sustainLength = songNotes[2];
@@ -1691,8 +1692,8 @@ class PlayState extends MusicBeatState
 			//defaults if no noteStyle was found in chart
 			var noteTypeCheck:String = 'normal';
 		
-			if (PlayStateChangeables.Optimize && player == 0)
-				continue;
+			//if (FlxG.save.data.middlescroll && player == 0)
+				//continue;
 
 			if (SONG.noteStyle == null) {
 				switch(storyWeek) {case 6: noteTypeCheck = 'pixel';}
@@ -1828,7 +1829,7 @@ class PlayState extends MusicBeatState
 			babyArrow.x += 50;
 			babyArrow.x += ((FlxG.width / 2) * player);
 			
-			if (PlayStateChangeables.Optimize)
+			if (FlxG.save.data.middlescroll)
 				babyArrow.x -= 275;
 			
 			cpuStrums.forEach(function(spr:FlxSprite)
@@ -2028,7 +2029,7 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'philly':
-				if (trainMoving && !PlayStateChangeables.Optimize)
+				if (trainMoving && FlxG.save.data.background)
 				{
 					trainFrameTiming += elapsed;
 

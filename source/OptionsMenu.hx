@@ -28,7 +28,8 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("Gameplay", [
 			new CustomControls("Edit a mobile controls..."),
 			new DFJKOption(controls),
-			new DownscrollOption("Change the layout of the strumline."),
+			new DownscrollOption("Change the strumline to the TOP/BOTTOM of the screen."),
+			new MiddlescrollOption("Change the strumline to the RIGHT/MIDDLE of the screen."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
 			new Judgement("Customize your Hit Timings. (LEFT or RIGHT)"),
 			/*#if desktop
@@ -62,7 +63,9 @@ class OptionsMenu extends MusicBeatState
 			new WatermarkOption("Enable and disable all watermarks from the engine."),
 			new ScoreScreen("Show the score screen after the end of a song."),
 			new ShowInput("Display every single input in the score screen."),
-			new Optimization("No backgrounds, no characters, centered notes, no player 2."),
+			// new Optimization("No backgrounds, no characters, centered notes, no player 2."),
+			new Characters("Toggle the visibility of characters."),
+			new Background("Toggle the visibility of background."),
 			new BotPlay("Showcase your charts and mods with autoplay."),
 		])
 		
@@ -132,9 +135,11 @@ class OptionsMenu extends MusicBeatState
 
 		if (acceptInput)
 		{
-			if (controls.BACK #if android || FlxG.android.justReleased.BACK #end && !isCat)
+			if (controls.BACK //#if android || FlxG.android.justReleased.BACK #end
+				 && !isCat)
 				FlxG.switchState(new MainMenuState());
-			else if (controls.BACK #if android || FlxG.android.justReleased.BACK #end)
+			else if (controls.BACK //#if android || FlxG.android.justReleased.BACK #end
+				)
 			{
 				isCat = false;
 				grpControls.clear();

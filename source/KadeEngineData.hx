@@ -12,6 +12,9 @@ class KadeEngineData
 		if (FlxG.save.data.downscroll == null)
 			FlxG.save.data.downscroll = false;
 
+		if (FlxG.save.data.middlescroll == null)
+			FlxG.save.data.middlescroll = false;
+
 		if (FlxG.save.data.dfjk == null)
 			FlxG.save.data.dfjk = false;
 			
@@ -91,8 +94,14 @@ class KadeEngineData
 		if (FlxG.save.data.inputShow == null)
 			FlxG.save.data.inputShow = false;
 
-		if (FlxG.save.data.optimize == null)
-			FlxG.save.data.optimize = false;
+		/*if (FlxG.save.data.optimize == null)
+			FlxG.save.data.optimize = false;*/
+
+		if (FlxG.save.data.char == null)
+			FlxG.save.data.char = true;
+
+		if (FlxG.save.data.bg == null)
+			FlxG.save.data.bg = true;
 		
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 		

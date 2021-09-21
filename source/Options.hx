@@ -177,6 +177,27 @@ class DownscrollOption extends Option
 	}
 }
 
+class MiddlescrollOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.middlescroll = !FlxG.save.data.middlescroll;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return FlxG.save.data.middlescroll ? "Middlescroll" : "Rightscroll";
+	}
+}
+
 class GhostTapOption extends Option
 {
 	public function new(desc:String)
@@ -541,7 +562,7 @@ class RainbowFPSOption extends Option
 	}
 }
 
-class Optimization extends Option
+/*class Optimization extends Option
 {
 	public function new(desc:String)
 		{
@@ -559,6 +580,48 @@ class Optimization extends Option
 		private override function updateDisplay():String
 		{
 			return "Optimization " + (FlxG.save.data.optimize ? "ON" : "OFF");
+		}
+}*/
+
+class Characters extends Option
+{
+	public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+	
+		public override function press():Bool
+		{
+			FlxG.save.data.char = !FlxG.save.data.char;
+			display = updateDisplay();
+			return true;
+		}
+	
+		private override function updateDisplay():String
+		{
+			return "Characters " + (FlxG.save.data.char ? "ON" : "OFF");
+		}
+}
+
+class Background extends Option
+{
+	public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+	
+		public override function press():Bool
+		{
+			FlxG.save.data.bg = !FlxG.save.data.bg;
+			display = updateDisplay();
+			return true;
+		}
+	
+		private override function updateDisplay():String
+		{
+			return "Background " + (FlxG.save.data.bg ? "ON" : "OFF");
 		}
 }
 
