@@ -47,12 +47,15 @@ class Mobilecontrols extends FlxSpriteGroup
 		switch (vpadMode)
 		{
 			case 1:
-				_virtualPad = new FlxVirtualPad(FULL, A);
+				_virtualPad = new FlxVirtualPad(FULL, // A
+					NONE);
 			case 2:
-				_virtualPad = new FlxVirtualPad(FULL, A);
+				_virtualPad = new FlxVirtualPad(FULL, // A
+					NONE);
 				_virtualPad = config.loadcustom(_virtualPad);
 			default: // 0
-				_virtualPad = new FlxVirtualPad(RIGHT_FULL, A);
+				_virtualPad = new FlxVirtualPad(RIGHT_FULL, // A
+					NONE);
 		}
 
 		_virtualPad.alpha = 0.75;
