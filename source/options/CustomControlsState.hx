@@ -171,9 +171,9 @@ class CustomControlsState extends MusicBeatSubstate
 			arrowanimate(touch);
 
 			//change Selection
-			if(touch.overlaps(leftArrow) && touch.justPressed)
+			if(touch.overlaps(leftArrow) && touch.justPressed || controls.LEFT_P)
 				changeSelection(-1);
-			else if (touch.overlaps(rightArrow) && touch.justPressed)
+			else if (touch.overlaps(rightArrow) && touch.justPressed || controls.RIGHT_P)
 				changeSelection(1);
 
 			//custom pad 
