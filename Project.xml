@@ -92,8 +92,8 @@
 	<assets path="assets/week6"    library="week6"    exclude="*.ogg" if="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.mp3" unless="web"/>
 	
-	<assets path='example_mods' rename='mods' embed='false'/>
-	<assets path='art/readme.txt' rename='do NOT readme.txt' />
+	<!-- <assets path='example_mods' rename='mods' embed='false'/> -->
+	<assets path='art/readme.txt' rename='do NOT readme.txt' /> 
 	<assets path='LICENSE' rename='LICENSE.txt' />
 	<!-- <template path='mods' /> -->
 	
@@ -121,7 +121,7 @@
 	<haxelib name="flixel-ui" />
 	<haxelib name="newgrounds" unless="mobile"/>
 	<haxelib name="faxe" if='switch'/>
-	<haxelib name="polymod"/>
+	<!-- <haxelib name="polymod"/> -->
 	<haxelib name="discord_rpc" if="windows"/>
 	<haxelib name="linc_luajit" if="windows"/>
 
