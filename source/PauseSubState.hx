@@ -150,7 +150,7 @@ class PauseSubState extends MusicBeatSubstate
 			changeSelection(1);
 		
 		#if windows
-		else if (leftP)
+		if (leftP)
 			{
 				oldOffset = PlayState.songOffset;
 				PlayState.songOffset -= 1;
