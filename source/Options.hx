@@ -96,6 +96,7 @@ class DFJKOption extends Option
 	}
 }
 
+#if mobileC
 class CustomControls extends Option
 {
 	public function new(desc:String)
@@ -113,6 +114,7 @@ class CustomControls extends Option
 		return "Mobile controls";
 	}
 }
+#end
 
 class About extends Option
 {
@@ -130,7 +132,6 @@ class About extends Option
 	{
 		return "About";
 	}
-
 }
 
 class CpuStrums extends Option

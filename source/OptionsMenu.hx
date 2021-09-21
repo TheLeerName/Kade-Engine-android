@@ -26,7 +26,9 @@ class OptionsMenu extends MusicBeatState
 
 	var options:Array<OptionCategory> = [
 		new OptionCategory("Gameplay", [
+			#if mobileC
 			new CustomControls("Edit a mobile controls..."),
+			#end
 			new DFJKOption(controls),
 			new DownscrollOption("Change the layout of the strumline."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
@@ -53,7 +55,12 @@ class OptionsMenu extends MusicBeatState
 		]),
 		
 		new OptionCategory("Misc", [
-			new About("About android port..."),
+			new About
+			#if mobileC
+			("About android port..."),
+			#else
+			("About mod..."),
+			#end
 			/*#if desktop
 			new FPSOption("Toggle the FPS Counter."),
 			new ReplayOption("View replays..."),
@@ -117,7 +124,7 @@ class OptionsMenu extends MusicBeatState
 		FlxTween.tween(blackBorder,{y: FlxG.height - 18},2, {ease: FlxEase.elasticInOut});
 
 		#if mobileC
-		addVirtualPad(UP_DOWN, A_B);
+		addVirtualPad(FULL, A_B);
 		#end
 
 		super.create();
@@ -186,9 +193,9 @@ class OptionsMenu extends MusicBeatState
 						}
 					else
 					{
-						if (controls.RIGHT_P)
+						if (controls.RIGHT)
 							currentSelectedCat.getOptions()[curSelected].right();
-						if (controls.LEFT_P)
+						if (controls.LEFT)
 							currentSelectedCat.getOptions()[curSelected].left();
 					}
 				}
@@ -201,9 +208,9 @@ class OptionsMenu extends MusicBeatState
 						else if (controls.LEFT_P)
 							FlxG.save.data.offset -= 0.1;
 					}
-					else if (controls.RIGHT_P)
+					else if (controls.RIGHT)
 						FlxG.save.data.offset += 0.1;
-					else if (controls.LEFT_P)
+					else if (controls.LEFT)
 						FlxG.save.data.offset -= 0.1;
 					
 					versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
@@ -222,9 +229,9 @@ class OptionsMenu extends MusicBeatState
 					else if (controls.LEFT_P)
 						FlxG.save.data.offset -= 0.1;
 				}
-				else if (controls.RIGHT_P)
+				else if (controls.RIGHT)
 					FlxG.save.data.offset += 0.1;
-				else if (controls.LEFT_P)
+				else if (controls.LEFT)
 					FlxG.save.data.offset -= 0.1;
 				
 				versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
