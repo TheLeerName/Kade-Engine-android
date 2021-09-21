@@ -32,41 +32,46 @@ class OptionsMenu extends MusicBeatState
 			new MiddlescrollOption("Change the strumline to the RIGHT/MIDDLE of the screen."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
 			new Judgement("Customize your Hit Timings. (LEFT or RIGHT)"),
-			/*#if desktop
+			#if desktop
 			new FPSCapOption("Cap your FPS."),
-			#end*/
+			#end
 			new ScrollSpeedOption("Change your scroll speed. (1 = Chart dependent)"),
-			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			new ResetButtonOption("Toggle pressing R to gameover."),
 			// new OffsetMenu("Get a note offset based off of your inputs!"),
-			new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference.")
 		]),
+
 		new OptionCategory("Appearance", [
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
-			new CamZoomOption("Toggle the camera zoom in-game."),
-			//#if desktop
-			//new RainbowFPSOption("Make the FPS Counter Rainbow."),
+			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
+			new WatermarkOption("Enable and disable all watermarks from the engine."),
+			#if desktop
+			new RainbowFPSOption("Make the FPS Counter Rainbow."),
+			new CpuStrums("CPU's strumline lights up when a note hits it."),
+			#end
 			new AccuracyOption("Display accuracy information."),
+			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
 			new SongPositionOption("Show the songs current position. (as a bar)"),
-			//new CpuStrums("CPU's strumline lights up when a note hits it."),
-			//#end
+			new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference.")
 		]),
 		
+		new OptionCategory("Optimization", [
+			new CamZoomOption("Toggle the camera zoom in-game."),
+			new FreeplayMusic("Toggle play instrumental of songs in freeplay."),
+			// new Optimization("No backgrounds, no characters, centered notes, no player 2."),
+			new Characters("Toggle the visibility of characters."),
+			new Background("Toggle the visibility of background.")
+		]),
+
 		new OptionCategory("Misc", [
 			new About("About android port..."),
 			/*#if desktop
 			new FPSOption("Toggle the FPS Counter."),
 			new ReplayOption("View replays..."),
 			#end*/
-			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
-			new WatermarkOption("Enable and disable all watermarks from the engine."),
 			new ScoreScreen("Show the score screen after the end of a song."),
 			new ShowInput("Display every single input in the score screen."),
-			// new Optimization("No backgrounds, no characters, centered notes, no player 2."),
-			new Characters("Toggle the visibility of characters."),
-			new Background("Toggle the visibility of background."),
-			new BotPlay("Showcase your charts and mods with autoplay."),
+			new BotPlay("Showcase your charts and mods with autoplay.")
 		])
 		
 	];

@@ -102,7 +102,10 @@ class KadeEngineData
 
 		if (FlxG.save.data.bg == null)
 			FlxG.save.data.bg = true;
-		
+
+		if (FlxG.save.data.freeplayMusic == null)
+			FlxG.save.data.freeplayMusic = false;
+
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 		
 		KeyBinds.gamepad = gamepad != null;
