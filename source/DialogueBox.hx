@@ -1,5 +1,9 @@
 package;
 
+import flixel.addons.ui.FlxUI;
+import flixel.input.FlxAccelerometer;
+import flixel.ui.FlxButton;
+import flixel.addons.ui.FlxUIButton;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.text.FlxTypeText;
@@ -33,6 +37,9 @@ class DialogueBox extends FlxSpriteGroup
 
 	var handSelect:FlxSprite;
 	var bgFade:FlxSprite;
+
+	var skipB:FlxUIButton;
+	var invTouch:FlxUIButton;
 
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
@@ -143,6 +150,17 @@ class DialogueBox extends FlxSpriteGroup
 		dialogue = new Alphabet(0, 80, "", false, true);
 		// dialogue.x = 90;
 		// add(dialogue);
+	
+		#if android
+		skipB = new FlxUIButton((FlxG.width-140)-20,20,"Skip");
+		skipB.setLabelFormat("Nokia Cellphone FC Small", 25, 0xFF222222);
+		skipB.resize(140, 50);
+		invTouch = new FlxUIButton(0, skipB.y+skipB.height+10);
+		invTouch.makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT);
+		add(invTouch);
+		add(skipB);
+		#end
+
 	}
 
 	var dialogueOpened:Bool = false;
@@ -171,48 +189,41 @@ class DialogueBox extends FlxSpriteGroup
 			}
 		}
 
-		if (dialogueOpened && !dialogueStarted)
+		if (!isEnding)
 		{
-			startDialogue();
-			dialogueStarted = true;
-		}
+			var next:Bool;
+			var skip:Bool;
 
-		if (PlayerSettings.player1.controls.ACCEPT && dialogueStarted == true)
-		{
-			remove(dialogue);
-				
-			FlxG.sound.play(Paths.sound('clickText'), 0.8);
+			next = FlxG.keys.justPressed.SPACE #if android || invTouch.justPressed #end;
+			skip = FlxG.keys.justPressed.S #if android || skipB.justPressed #end;
 
-			if (dialogueList[1] == null && dialogueList[0] != null)
+			if (skip)
 			{
-				if (!isEnding)
-				{
-					isEnding = true;
-
-					if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'thorns')
-						FlxG.sound.music.fadeOut(2.2, 0);
-
-					new FlxTimer().start(0.2, function(tmr:FlxTimer)
-					{
-						box.alpha -= 1 / 5;
-						bgFade.alpha -= 1 / 5 * 0.7;
-						portraitLeft.visible = false;
-						portraitRight.visible = false;
-						swagDialogue.alpha -= 1 / 5;
-						dropText.alpha = swagDialogue.alpha;
-					}, 5);
-
-					new FlxTimer().start(1.2, function(tmr:FlxTimer)
-					{
-						finishThing();
-						kill();
-					});
-				}
+				FlxG.sound.play(Paths.sound('clickText'), 0.8);
+				endDialogue();
 			}
-			else
+
+			if (dialogueOpened && !dialogueStarted)
+				{
+					startDialogue();
+					dialogueStarted = true;
+				}
+
+				if (next && dialogueStarted == true)
 			{
-				dialogueList.remove(dialogueList[0]);
-				startDialogue();
+				remove(dialogue);
+
+				FlxG.sound.play(Paths.sound('clickText'), 0.8);
+
+				if (dialogueList[1] == null && dialogueList[0] != null)
+				{
+					endDialogue();
+				}
+				else
+				{
+					dialogueList.remove(dialogueList[0]);
+					startDialogue();
+				}
 			}
 		}
 		
@@ -221,14 +232,33 @@ class DialogueBox extends FlxSpriteGroup
 
 	var isEnding:Bool = false;
 
+	function endDialogue()
+		{
+			isEnding = true;
+	
+			if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'thorns')
+				FlxG.sound.music.fadeOut(2.2, 0);
+	
+			new FlxTimer().start(0.2, function(tmr:FlxTimer)
+			{
+				box.alpha -= 1 / 5;
+				bgFade.alpha -= 1 / 5 * 0.7;
+				portraitLeft.visible = false;
+				portraitRight.visible = false;
+				swagDialogue.alpha -= 1 / 5;
+				dropText.alpha = swagDialogue.alpha;
+			}, 5);
+	
+			new FlxTimer().start(1.2, function(tmr:FlxTimer)
+			{
+				finishThing();
+				kill();
+			});
+		}
+	
 	function startDialogue():Void
 	{
 		cleanDialog();
-		// var theDialog:Alphabet = new Alphabet(0, 70, dialogueList[0], false, true);
-		// dialogue = theDialog;
-		// add(theDialog);
-
-		// swagDialogue.text = ;
 		swagDialogue.resetText(dialogueList[0]);
 		swagDialogue.start(0.04, true);
 

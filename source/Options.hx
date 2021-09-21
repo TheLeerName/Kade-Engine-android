@@ -92,7 +92,7 @@ class DFJKOption extends Option
 
 	private override function updateDisplay():String
 	{
-		return "Key Bindings";
+		return "Keyboard Bindings";
 	}
 }
 
