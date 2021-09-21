@@ -1692,8 +1692,8 @@ class PlayState extends MusicBeatState
 			//defaults if no noteStyle was found in chart
 			var noteTypeCheck:String = 'normal';
 		
-			//if (FlxG.save.data.middlescroll && player == 0)
-				//continue;
+			if (FlxG.save.data.middlescroll && player == 0)
+				continue;
 
 			if (SONG.noteStyle == null) {
 				switch(storyWeek) {case 6: noteTypeCheck = 'pixel';}
