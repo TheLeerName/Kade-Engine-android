@@ -70,7 +70,8 @@ class CustomControlsState extends MusicBeatSubstate
 
 
 		//pad
-		_pad = new FlxVirtualPad(RIGHT_FULL, A);
+		_pad = new FlxVirtualPad(RIGHT_FULL, // A
+			NONE);
 		_pad.alpha = 0;
 
 
@@ -209,15 +210,15 @@ class CustomControlsState extends MusicBeatSubstate
 				case 0:
 					this.remove(_pad);
 					_pad = null;
-					_pad = new FlxVirtualPad(RIGHT_FULL //, A
-						);
+					_pad = new FlxVirtualPad(RIGHT_FULL, // A
+						NONE);
 					_pad.alpha = 0.75;
 					this.add(_pad);
 				case 1:
 					this.remove(_pad);
 					_pad = null;
-					_pad = new FlxVirtualPad(FULL //, A
-						);
+					_pad = new FlxVirtualPad(FULL, // A
+						NONE);
 					_pad.alpha = 0.75;
 					this.add(_pad);
 				case 2:
