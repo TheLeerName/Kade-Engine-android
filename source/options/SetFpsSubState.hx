@@ -1,3 +1,4 @@
+#if mobileC
 package options;
 
 import flixel.text.FlxText;
@@ -142,3 +143,4 @@ class SetFpsSubState extends MusicBeatSubstate
         }
     }
 }
+#end

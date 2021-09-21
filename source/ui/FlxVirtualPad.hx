@@ -1,3 +1,4 @@
+#if mobileC
 package ui;
 
 import flixel.FlxG;
@@ -203,3 +204,4 @@ enum FlxActionMode
 	A_B_C;
 	A_B_X_Y;
 }
+#end

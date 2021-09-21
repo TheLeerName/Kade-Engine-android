@@ -1,3 +1,4 @@
+#if mobileC
 package ui;
 
 import flixel.graphics.FlxGraphic;
@@ -96,3 +97,4 @@ class Hitbox extends FlxSpriteGroup
             buttonRight = null;
         }
 } 
+#end
