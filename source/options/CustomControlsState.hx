@@ -32,14 +32,14 @@ class CustomControlsState extends MusicBeatSubstate
 	var down_text:FlxText;
 	var left_text:FlxText;
 	var right_text:FlxText;
-	var a_text:FlxText;
+	//var a_text:FlxText;
 
 	var inputvari:FlxText;
 
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 							//'hitbox',
-	var controlitems:Array<String> = ['right control', 'left control','keyboard','custom', 'hitbox'];
+	var controlitems:Array<String> = ['right control', 'left control', 'keyboard', 'custom', 'hitbox'];
 
 	var curSelected:Int = 0;
 
@@ -99,7 +99,7 @@ class CustomControlsState extends MusicBeatSubstate
 		down_text = new FlxText(200, 250, 0,"Button down x:" + _pad.buttonDown.x +" y:" + _pad.buttonDown.y, 24);
 		left_text = new FlxText(200, 300, 0,"Button left x:" + _pad.buttonLeft.x +" y:" + _pad.buttonLeft.y, 24);
 		right_text = new FlxText(200, 350, 0,"Button right x:" + _pad.buttonRight.x +" y:" + _pad.buttonRight.y, 24);
-		a_text = new FlxText(200, 400, 0,"button A x:" + _pad.buttonA.x +" y:" + _pad.buttonA.y, 24);		
+		//a_text = new FlxText(200, 400, 0,"button A x:" + _pad.buttonA.x +" y:" + _pad.buttonA.y, 24);		
 
 		//hitboxes
 
@@ -153,7 +153,7 @@ class CustomControlsState extends MusicBeatSubstate
 		add(down_text);
 		add(left_text);
 		add(right_text);
-		add(a_text);
+		//add(a_text);
 
 		// change selection
 		changeSelection();
@@ -163,25 +163,18 @@ class CustomControlsState extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
-		#if android
-		var androidback:Bool = FlxG.android.justReleased.BACK;
-		#else
-		var androidback:Bool = false;
-		#end
-		if (exitbutton.justReleased || androidback){
+		if (exitbutton.justReleased #if android || FlxG.android.justReleased.BACK #end)
 			FlxG.switchState(new MainMenuState());
-		}
 
 		for (touch in FlxG.touches.list){
 			//left arrow animation
 			arrowanimate(touch);
 
 			//change Selection
-			if(touch.overlaps(leftArrow) && touch.justPressed){
+			if(touch.overlaps(leftArrow) && touch.justPressed)
 				changeSelection(-1);
-			}else if (touch.overlaps(rightArrow) && touch.justPressed){
+			else if (touch.overlaps(rightArrow) && touch.justPressed)
 				changeSelection(1);
-			}
 
 			//custom pad 
 			trackbutton(touch);
@@ -199,17 +192,13 @@ class CustomControlsState extends MusicBeatSubstate
 			trace(curSelected);
 
 			if (forceChange != null)
-			{
 				curSelected = forceChange;
-			}
 
 			inputvari.text = controlitems[curSelected];
 
 			if (forceChange != null)
-				{
 					if (curSelected == 2){
 						_pad.visible = true;
-					}
 
 					return;
 				}
@@ -220,13 +209,15 @@ class CustomControlsState extends MusicBeatSubstate
 				case 0:
 					this.remove(_pad);
 					_pad = null;
-					_pad = new FlxVirtualPad(RIGHT_FULL, A);
+					_pad = new FlxVirtualPad(RIGHT_FULL //, A
+						);
 					_pad.alpha = 0.75;
 					this.add(_pad);
 				case 1:
 					this.remove(_pad);
 					_pad = null;
-					_pad = new FlxVirtualPad(FULL, A);
+					_pad = new FlxVirtualPad(FULL //, A
+						);
 					_pad.alpha = 0.75;
 					this.add(_pad);
 				case 2:
@@ -247,27 +238,25 @@ class CustomControlsState extends MusicBeatSubstate
 		}
 
 	function arrowanimate(touch:flixel.input.touch.FlxTouch){
-		if(touch.overlaps(leftArrow) && touch.pressed){
+		if(touch.overlaps(leftArrow) && touch.pressed)
 			leftArrow.animation.play('press');
-		}
 
-		if(touch.overlaps(leftArrow) && touch.released){
+		if(touch.overlaps(leftArrow) && touch.released)
 			leftArrow.animation.play('idle');
-		}
-		//right arrow animation
-		if(touch.overlaps(rightArrow) && touch.pressed){
-			rightArrow.animation.play('press');
-		}
 
-		if(touch.overlaps(rightArrow) && touch.released){
+		//right arrow animation
+		if(touch.overlaps(rightArrow) && touch.pressed)
+			rightArrow.animation.play('press');
+
+		if(touch.overlaps(rightArrow) && touch.released)
 			rightArrow.animation.play('idle');
-		}
 	}
 
 	function trackbutton(touch:flixel.input.touch.FlxTouch){
 		//custom pad
 
-		if (buttonistouched){
+		if (buttonistouched)
+		{
 
 			if (bindbutton.justReleased && touch.justReleased)
 			{
@@ -279,7 +268,9 @@ class CustomControlsState extends MusicBeatSubstate
 				setbuttontexts();
 			}
 
-		}else {
+		}
+		else 
+		{
 			if (_pad.buttonUp.justPressed) {
 				if (curSelected != 3)
 					changeSelection(0,3);
@@ -307,12 +298,12 @@ class CustomControlsState extends MusicBeatSubstate
 
 				movebutton(touch, _pad.buttonLeft);
 			}
-			if (_pad.buttonA.justPressed) {
+			/*if (_pad.buttonA.justPressed) {
 				if (curSelected != 3)
 					changeSelection(0,3);
 
 				movebutton(touch, _pad.buttonA);
-			}			
+			}*/			
 		}
 	}
 
@@ -328,7 +319,7 @@ class CustomControlsState extends MusicBeatSubstate
 		down_text.text = "Button down x:" + _pad.buttonDown.x +" y:" + _pad.buttonDown.y;
 		left_text.text = "Button left x:" + _pad.buttonLeft.x +" y:" + _pad.buttonLeft.y;
 		right_text.text = "Button right x:" + _pad.buttonRight.x +" y:" + _pad.buttonRight.y;
-		a_text.text = "Button A x:" + _pad.buttonA.x +" y:" + _pad.buttonA.y;		
+		//a_text.text = "Button A x:" + _pad.buttonA.x +" y:" + _pad.buttonA.y;		
 	}
 
 
@@ -337,9 +328,8 @@ class CustomControlsState extends MusicBeatSubstate
 
 		config.setcontrolmode(curSelected);
 
-		if (curSelected == 3){
+		if (curSelected == 3)
 			savecustom();
-		}
 	}
 
 	function savecustom() {
