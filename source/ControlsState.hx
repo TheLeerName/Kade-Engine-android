@@ -1,5 +1,5 @@
 #if mobileC
-package options;
+package;
 
 import flixel.ui.FlxButton;
 import flixel.addons.ui.FlxUIButton;
@@ -19,7 +19,7 @@ import lime.system.Clipboard;
 
 using StringTools;
 
-class CustomControlsState extends MusicBeatSubstate
+class ControlsState extends MusicBeatSubstate
 {
 
 	var _pad:FlxVirtualPad;
