@@ -3227,7 +3227,7 @@ class PlayState extends MusicBeatState
 					});
 				}
 		 
-				if (KeyBinds.gamepad && !FlxG.keys.justPressed.ANY)
+				if (KeyBinds.gamepad && !controls.LEFT_P || !controls.DOWN_P || !controls.UP_P || !controls.RIGHT_P )
 				{
 					// PRESSES, check for note hits
 					if (pressArray.contains(true) && generatedMusic)
