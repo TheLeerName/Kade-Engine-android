@@ -1,5 +1,5 @@
 #if mobileC
-package ui;
+package mobile;
 
 import flixel.FlxG;
 import flixel.graphics.frames.FlxTileFrames;

@@ -106,7 +106,7 @@ class CustomControls extends Option
 	}
 	public override function press():Bool
 	{
-		FlxG.switchState(new ControlsState());
+		FlxG.switchState(new mobile.ControlsState());
 		return true;
 	}
 	private override function updateDisplay():String

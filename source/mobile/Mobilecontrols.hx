@@ -1,13 +1,13 @@
 #if mobileC
-package ui;
+package mobile;
 
 import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 
-import ui.FlxVirtualPad;
-import ui.Hitbox;
+import mobile.FlxVirtualPad;
+import mobile.Hitbox;
 
-import Config;
+import KadeEngineData;
 
 class Mobilecontrols extends FlxSpriteGroup
 {
@@ -16,13 +16,13 @@ class Mobilecontrols extends FlxSpriteGroup
 	public var _hitbox:Hitbox;
 	public var _virtualPad:FlxVirtualPad;
 
-	var config:Config;
+	var config:KadeEngineData;
 
 	public function new() 
 	{
 		super();
 
-		config = new Config();
+		config = new KadeEngineData();
 
 		// load control mode num from Config.hx
 		mode = getModeFromNumber(config.getcontrolmode());

@@ -1,5 +1,5 @@
 #if mobileC
-package;
+package mobile;
 
 import flixel.ui.FlxButton;
 import flixel.addons.ui.FlxUIButton;
@@ -7,12 +7,12 @@ import flixel.text.FlxText;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
-import ui.FlxVirtualPad;
+import mobile.FlxVirtualPad;
 import flixel.util.FlxSave;
 import flixel.math.FlxPoint;
 import haxe.Json;
-import ui.Hitbox;
-import Config;
+import mobile.Hitbox;
+import KadeEngineData;
 #if lime
 import lime.system.Clipboard;
 #end
@@ -48,14 +48,14 @@ class ControlsState extends MusicBeatSubstate
 
 	var bindbutton:flixel.ui.FlxButton;
 
-	var config:Config;
+	var config:KadeEngineData;
 
 	public function new()
 	{
 		super();
 
 		//init config
-		config = new Config();
+		config = new KadeEngineData();
 
 		// bg
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/images/menuBG.png');

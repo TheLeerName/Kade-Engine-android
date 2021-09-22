@@ -1,5 +1,5 @@
 #if mobileC
-package options;
+package mobile;
 
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -8,10 +8,10 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
-import ui.FlxVirtualPad;
+import mobile.FlxVirtualPad;
 import flixel.util.FlxSave;
 import flixel.math.FlxPoint;
-import Config;
+import KadeEngineData;
 
 class SetFpsSubState extends MusicBeatSubstate
 {
