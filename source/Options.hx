@@ -114,6 +114,28 @@ class CustomControls extends Option
 		return "Mobile controls";
 	}
 }
+
+class FastValue extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.fastValue +=1;
+		FlxG.save.data.fastValue = FlxG.save.data.fastValue%3;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return (FlxG.save.data.fastValue == 0 ? "Slow" : (FlxG.save.data.fastValue == 1 ? "Faster" : "Fastest")) + " Value";
+	}
+}
 #end
 
 class CpuStrums extends Option
@@ -315,7 +337,7 @@ class Judgement extends Option
 	
 	public override function press():Bool
 	{
-		return true;
+		return false;
 	}
 
 	private override function updateDisplay():String
@@ -399,9 +421,6 @@ class ScoreScreen extends Option
 		return (FlxG.save.data.scoreScreen ? "Show Score Screen" : "No Score Screen");
 	}
 }
-
-
-
 
 class FPSCapOption extends Option
 {

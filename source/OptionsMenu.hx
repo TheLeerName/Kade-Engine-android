@@ -32,6 +32,9 @@ class OptionsMenu extends MusicBeatState
 			new DFJKOption(controls),
 			new DownscrollOption("Change the layout of the strumline."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
+			#if mobileC
+			new FastValue("Switch speed of changing value in bottom. (e.g. offset)"),
+			#end
 			new Judgement("Customize your Hit Timings. (LEFT or RIGHT)"),
 			#if desktop
 			new FPSCapOption("Cap your FPS."),
@@ -50,9 +53,8 @@ class OptionsMenu extends MusicBeatState
 			#end
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
-			new SongPositionOption("Show the songs current position. (as a bar)")
-			#if desktop
-			new CpuStrums("CPU's strumline lights up when a note hits it."),
+			new SongPositionOption("Show the songs current position. (as a bar)") #if desktop ,
+			new CpuStrums("CPU's strumline lights up when a note hits it.")
 			#end
 		]),
 		
@@ -105,7 +107,7 @@ class OptionsMenu extends MusicBeatState
 
 		currentDescription = "none";
 
-		versionShit = new FlxText(5, FlxG.height + 40, 0, "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription, 12);
+		versionShit = new FlxText(5, FlxG.height + 40, 0, #if mobileC "Offset (Left, Right" + (FlxG.save.data.fastValue == 0 ? "" : (FlxG.save.data.fastValue == 1 ? ", Fast value" : ", Fastest value")) + "): " #else "Offset (Left, Right, Shift for slow): " #end + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
@@ -180,62 +182,83 @@ class OptionsMenu extends MusicBeatState
 			{
 				if (currentSelectedCat.getOptions()[curSelected].getAccept())
 				{
-					if (FlxG.keys.pressed.SHIFT)
-						{
-							if (controls.RIGHT_P)
-								currentSelectedCat.getOptions()[curSelected].right();
-							if (controls.LEFT_P)
-								currentSelectedCat.getOptions()[curSelected].left();
-						}
-					else
+					if (FlxG.keys.pressed.SHIFT #if mobileC || FlxG.save.data.fastValue != 0 #end)
 					{
 						if (controls.RIGHT)
 							currentSelectedCat.getOptions()[curSelected].right();
 						if (controls.LEFT)
 							currentSelectedCat.getOptions()[curSelected].left();
 					}
+					else //fastvalue == 0
+					{
+						if (controls.RIGHT_P)
+							currentSelectedCat.getOptions()[curSelected].right();
+						if (controls.LEFT_P)
+							currentSelectedCat.getOptions()[curSelected].left();
+					}
 				}
 				else
 				{
-					if (FlxG.keys.pressed.SHIFT)
+					if (FlxG.keys.pressed.SHIFT #if mobileC || FlxG.save.data.fastValue == 0 #end)
 					{
 						if (controls.RIGHT_P)
 							FlxG.save.data.offset += 0.1;
 						else if (controls.LEFT_P)
 							FlxG.save.data.offset -= 0.1;
 					}
+					#if mobileC
+					else if (FlxG.save.data.fastValue == 2)
+					{
+						if (controls.RIGHT)
+							FlxG.save.data.offset += 1;
+						else if (controls.LEFT)
+							FlxG.save.data.offset -= 1;
+					}
+					#end
+					//fastvalue == 1
 					else if (controls.RIGHT)
 						FlxG.save.data.offset += 0.1;
 					else if (controls.LEFT)
 						FlxG.save.data.offset -= 0.1;
 					
-					versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+					versionShit.text = #if mobileC "Offset (Left, Right" + (FlxG.save.data.fastValue == 0 ? "" : (FlxG.save.data.fastValue == 1 ? ", Fast value" : ", Fastest value")) + "): " #else "Offset (Left, Right, Shift for slow): " #end + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
 				}
 				if (currentSelectedCat.getOptions()[curSelected].getAccept())
 					versionShit.text =  currentSelectedCat.getOptions()[curSelected].getValue() + " - Description - " + currentDescription;
 				else
-					versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+					versionShit.text = #if mobileC "Offset (Left, Right" + (FlxG.save.data.fastValue == 0 ? "" : (FlxG.save.data.fastValue == 1 ? ", Fast value" : ", Fastest value")) + "): " #else "Offset (Left, Right, Shift for slow): " #end + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
 			}
 			else
 			{
-				if (FlxG.keys.pressed.SHIFT)
+				if (FlxG.keys.pressed.SHIFT #if mobileC || FlxG.save.data.fastValue == 0 #end)
 				{
 					if (controls.RIGHT_P)
 						FlxG.save.data.offset += 0.1;
 					else if (controls.LEFT_P)
 						FlxG.save.data.offset -= 0.1;
 				}
+				#if mobileC
+				else if (FlxG.save.data.fastValue == 2)
+				{
+					if (controls.RIGHT)
+						FlxG.save.data.offset += 1;
+					else if (controls.LEFT)
+						FlxG.save.data.offset -= 1;
+				}
+				#end
+				//fastvalue == 1
 				else if (controls.RIGHT)
 					FlxG.save.data.offset += 0.1;
 				else if (controls.LEFT)
 					FlxG.save.data.offset -= 0.1;
 				
-				versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+				versionShit.text = #if mobileC "Offset (Left, Right" + (FlxG.save.data.fastValue == 0 ? "" : (FlxG.save.data.fastValue == 1 ? ", Fast value" : ", Fastest value")) + "): " #else "Offset (Left, Right, Shift for slow): " #end + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
 			}
 		
-
+			#if !mobileC
 			if (controls.RESET)
 					FlxG.save.data.offset = 0;
+			#end
 
 			if (controls.ACCEPT)
 			{
@@ -290,10 +313,10 @@ class OptionsMenu extends MusicBeatState
 			if (currentSelectedCat.getOptions()[curSelected].getAccept())
 				versionShit.text =  currentSelectedCat.getOptions()[curSelected].getValue() + " - Description - " + currentDescription;
 			else
-				versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+				versionShit.text = #if mobileC "Offset (Left, Right" + (FlxG.save.data.fastValue == 0 ? "" : (FlxG.save.data.fastValue == 1 ? ", Fast value" : ", Fastest value")) + "): " #else "Offset (Left, Right, Shift for slow): " #end + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
 		}
 		else
-			versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+			versionShit.text = #if mobileC "Offset (Left, Right" + (FlxG.save.data.fastValue == 0 ? "" : (FlxG.save.data.fastValue == 1 ? ", Fast value" : ", Fastest value")) + "): " #else "Offset (Left, Right, Shift for slow): " #end + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
 		// selector.y = (70 * curSelected) + 30;
 
 		var bullShit:Int = 0;

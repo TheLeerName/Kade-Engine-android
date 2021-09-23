@@ -95,6 +95,11 @@ class KadeEngineData
 
 		if (FlxG.save.data.dfjk == null)
 			FlxG.save.data.dfjk = false;
+
+		#if mobileC
+		if (FlxG.save.data.fastValue == null)
+			FlxG.save.data.fastValue = 0;
+		#end
 			
 		if (FlxG.save.data.accuracyDisplay == null)
 			FlxG.save.data.accuracyDisplay = true;
