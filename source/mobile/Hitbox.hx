@@ -1,5 +1,5 @@
 #if mobileC
-package ui;
+package mobile;
 
 import flixel.graphics.FlxGraphic;
 import flixel.addons.ui.FlxButtonPlus;

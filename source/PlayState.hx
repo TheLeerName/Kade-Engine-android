@@ -63,12 +63,11 @@ import lime.utils.Assets;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
-import ui.Mobilecontrols;
-
-#if windows
-import Discord.DiscordClient;
+#if mobileC
+import mobile.Mobilecontrols;
 #end
 #if windows
+import Discord.DiscordClient;
 import Sys;
 import sys.FileSystem;
 #end
@@ -3210,19 +3209,7 @@ class PlayState extends MusicBeatState
 					holdArray = [false, false, false, false];
 					pressArray = [false, false, false, false];
 					releaseArray = [false, false, false, false];
-				} 
-						} 
-				} 
-						} 
-				} 
-						} 
-				} 
-						} 
-				} 
-						} 
-				} 
-						} 
-				} 
+				}
 
 				var anas:Array<Ana> = [null,null,null,null];
 

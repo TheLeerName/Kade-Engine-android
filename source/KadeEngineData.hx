@@ -1,11 +1,92 @@
 import flixel.input.gamepad.FlxGamepad;
 import openfl.Lib;
 import flixel.FlxG;
+#if mobileC
+import flixel.util.FlxSave;
+import mobile.FlxVirtualPad;
+import flixel.math.FlxPoint;
+#end
 
 class KadeEngineData
 {
-    public static function initSave()
+	#if mobileC
+	// its from config file
+	var save:FlxSave;
+
+    public function new() 
     {
+        save = new FlxSave();
+    	save.bind("saveconrtol");
+    }
+
+	public function getcontrolmode():Int {
+        // load control mode num from FlxSave
+		if (save.data.buttonsmode != null) return save.data.buttonsmode[0];
+        return 0;
+    }
+
+    public function setcontrolmode(mode:Int = 0):Int {
+        // save control mode num from FlxSave
+		if (save.data.buttonsmode == null) save.data.buttonsmode = new Array();
+        save.data.buttonsmode[0] = mode;
+        save.flush();
+
+        return save.data.buttonsmode[0];
+    }
+
+    public function savecustom(_pad:FlxVirtualPad) {
+		trace("saved");
+
+		if (save.data.buttons == null)
+		{
+			save.data.buttons = new Array();
+
+			for (buttons in _pad)
+			{
+				save.data.buttons.push(FlxPoint.get(buttons.x, buttons.y));
+			}
+		}else
+		{
+			var tempCount:Int = 0;
+			for (buttons in _pad)
+			{
+				save.data.buttons[tempCount] = FlxPoint.get(buttons.x, buttons.y);
+				tempCount++;
+			}
+		}
+		save.flush();
+	}
+
+	public function loadcustom(_pad:FlxVirtualPad):FlxVirtualPad {
+		//load pad
+		if (save.data.buttons == null) return _pad;
+		var tempCount:Int = 0;
+
+		for(buttons in _pad)
+		{
+			buttons.x = save.data.buttons[tempCount].x;
+			buttons.y = save.data.buttons[tempCount].y;
+			tempCount++;
+		}	
+        return _pad;
+	}
+
+	public function setFrameRate(fps:Int = 60) {
+		if (fps < 10) return;
+
+		FlxG.stage.frameRate = fps;
+		save.data.framerate = fps;
+		save.flush();
+	}
+
+	public function getFrameRate():Int {
+		if (save.data.framerate != null) return save.data.framerate;
+		return 60;
+	}
+	#end
+
+	public static function initSave()
+	{
         if (FlxG.save.data.newInput == null)
 			FlxG.save.data.newInput = true;
 
@@ -17,7 +98,12 @@ class KadeEngineData
 
 		if (FlxG.save.data.dfjk == null)
 			FlxG.save.data.dfjk = false;
-			
+
+		#if mobileC
+		if (FlxG.save.data.fastValue == null)
+			FlxG.save.data.fastValue = 0;
+		#end
+
 		if (FlxG.save.data.accuracyDisplay == null)
 			FlxG.save.data.accuracyDisplay = true;
 

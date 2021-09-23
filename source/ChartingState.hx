@@ -37,7 +37,7 @@ import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.ByteArray;
 #if mobileC
-import ui.FlxVirtualPad;
+import mobile.FlxVirtualPad;
 #end
 
 using StringTools;
