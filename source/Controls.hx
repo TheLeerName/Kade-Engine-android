@@ -312,18 +312,16 @@ class Controls extends FlxActionSet
 
 
 
-	#if android
+	/*#if android
 	public function addAndroidBack() {
 		// fix this later
-
-		/*
 		var BACK = #if (openfl >= "8.0.0") 0x4000010E #else 27 #end;
 		_back.addKey(BACK, JUST_RELEASED);
 		_back.addKey(BACK, JUST_PRESSED);
 		_back.addKey(BACK, PRESSED);
 		*/
 	}
-	#end
+	#end*/
 
 
 	public function setVirtualPad(virtualPad:FlxVirtualPad, ?DPad:FlxDPadMode, ?Action:FlxActionMode) {
