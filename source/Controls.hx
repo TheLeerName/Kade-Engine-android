@@ -319,7 +319,6 @@ class Controls extends FlxActionSet
 		_back.addKey(BACK, JUST_RELEASED);
 		_back.addKey(BACK, JUST_PRESSED);
 		_back.addKey(BACK, PRESSED);
-		*/
 	}
 	#end*/
 
@@ -347,7 +346,6 @@ class Controls extends FlxActionSet
 				inline forEachBound(Control.DOWN, (action, state) -> addbutton(action, virtualPad.buttonDown, state));
 				inline forEachBound(Control.LEFT, (action, state) -> addbutton(action, virtualPad.buttonLeft, state));
 				inline forEachBound(Control.RIGHT, (action, state) -> addbutton(action, virtualPad.buttonRight, state));
-
 			case NONE:
 		}
 
@@ -369,9 +367,7 @@ class Controls extends FlxActionSet
 	}
 	#end
 	override function update()
-	{
 		super.update();
-	}
 
 	// inline
 	public function checkByName(name:Action):Bool
