@@ -87,7 +87,7 @@ class KadeEngineData
 		if (FlxG.save.data.fastValue == null)
 			FlxG.save.data.fastValue = 0;
 		#end
-			
+
 		if (FlxG.save.data.accuracyDisplay == null)
 			FlxG.save.data.accuracyDisplay = true;
 
@@ -97,8 +97,10 @@ class KadeEngineData
 		if (FlxG.save.data.songPosition == null)
 			FlxG.save.data.songPosition = false;
 
-		if (FlxG.save.data.fps == null)
-			FlxG.save.data.fps = false;
+		#if desktop
+		if (FlxG.save.data.inputShow == null)
+			FlxG.save.data.inputShow = false;
+		#end
 
 		if (FlxG.save.data.changedHit == null)
 		{
@@ -106,15 +108,25 @@ class KadeEngineData
 			FlxG.save.data.changedHitY = -1;
 			FlxG.save.data.changedHit = false;
 		}
+		#if mobileC
+		if (FlxG.save.data.fpsCap == null)
+			FlxG.save.data.fpsCap = 60;
 
-		if (FlxG.save.data.fpsRain == null)
-			FlxG.save.data.fpsRain = false;
-
+		if (FlxG.save.data.fpsCap > 90)
+			FlxG.save.data.fpsCap = 60; // baby proof so you can't hard lock ur copy of kade engine
+		#else
 		if (FlxG.save.data.fpsCap == null)
 			FlxG.save.data.fpsCap = 120;
 
 		if (FlxG.save.data.fpsCap > 285 || FlxG.save.data.fpsCap < 60)
 			FlxG.save.data.fpsCap = 120; // baby proof so you can't hard lock ur copy of kade engine
+		#end
+
+		if (FlxG.save.data.fps == null)
+			FlxG.save.data.fps = false;
+
+		if (FlxG.save.data.fpsRain == null)
+			FlxG.save.data.fpsRain = false;
 		
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 1;
