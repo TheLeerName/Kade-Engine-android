@@ -36,9 +36,9 @@ class OptionsMenu extends MusicBeatState
 			new FastValue("Switch speed of changing value in bottom. (e.g. offset)"),
 			#end
 			new Judgement("Customize your Hit Timings. (LEFT or RIGHT)"),
-			#if desktop
+			//#if desktop
 			new FPSCapOption("Cap your FPS."),
-			#end
+			//#end
 			new ScrollSpeedOption("Change your scroll speed. (1 = Chart dependent)"),
 			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			new ResetButtonOption("Toggle pressing R to gameover."),
@@ -48,25 +48,26 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("Appearance", [
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new CamZoomOption("Toggle the camera zoom in-game."),
-			#if desktop
 			new RainbowFPSOption("Make the FPS Counter Rainbow."),
-			#end
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
-			new SongPositionOption("Show the songs current position. (as a bar)") #if desktop ,
+			new SongPositionOption("Show the songs current position. (as a bar)")
+			#if desktop ,
 			new CpuStrums("CPU's strumline lights up when a note hits it.")
 			#end
 		]),
 		
 		new OptionCategory("Misc", [
-			#if desktop
 			new FPSOption("Toggle the FPS Counter."),
+			#if desktop
 			new ReplayOption("View replays..."),
 			#end
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
 			new WatermarkOption("Enable and disable all watermarks from the engine."),
 			new ScoreScreen("Show the score screen after the end of a song."),
+			#if desktop
 			new ShowInput("Display every single input in the score screen."),
+			#end
 			new Optimization("No backgrounds, no characters, centered notes, no player 2."),
 			new BotPlay("Showcase your charts and mods with autoplay.")
 		])
