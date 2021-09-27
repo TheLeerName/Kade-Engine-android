@@ -70,19 +70,6 @@ class KadeEngineData
 		}	
         return _pad;
 	}
-
-	public function setFrameRate(fps:Int = 60) {
-		if (fps < 10) return;
-
-		FlxG.stage.frameRate = fps;
-		save.data.framerate = fps;
-		save.flush();
-	}
-
-	public function getFrameRate():Int {
-		if (save.data.framerate != null) return save.data.framerate;
-		return 60;
-	}
 	#end
 
 	public static function initSave()
