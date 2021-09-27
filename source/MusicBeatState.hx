@@ -43,9 +43,9 @@ class MusicBeatState extends FlxUIState
 		trackedinputs = controls.trackedinputs;
 		controls.trackedinputs = [];
 
-		#if android
+		/*#if android
 		controls.addAndroidBack();
-		#end
+		#end*/
 	}
 
 	override function destroy() {
@@ -53,8 +53,8 @@ class MusicBeatState extends FlxUIState
 
 		super.destroy();
 	}
-	#else
-	public function addVirtualPad(?DPad, ?Action){};
+	/*#else
+	public function addVirtualPad(?DPad, ?Action){};*/
 	#end	
 
 	override function create()
