@@ -148,33 +148,19 @@ class MainMenuState extends MusicBeatState
 			if (gamepad != null)
 			{
 				if (gamepad.justPressed.DPAD_UP)
-				{
-					FlxG.sound.play(Paths.sound('scrollMenu'));
 					changeItem(-1);
-				}
 				if (gamepad.justPressed.DPAD_DOWN)
-				{
-					FlxG.sound.play(Paths.sound('scrollMenu'));
 					changeItem(1);
-				}
 			}
 
 			if (controls.UP_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-1);
-			}
 
 			if (controls.DOWN_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
-			}
 
 			if (controls.BACK #if android || FlxG.android.justReleased.BACK #end)
-			{
 				FlxG.switchState(new TitleState());
-			}
 
 			if (controls.ACCEPT)
 			{
@@ -253,6 +239,7 @@ class MainMenuState extends MusicBeatState
 
 	function changeItem(huh:Int = 0)
 	{
+		FlxG.sound.play(Paths.sound('scrollMenu'));
 		if (finishedFunnyMove)
 		{
 			curSelected += huh;

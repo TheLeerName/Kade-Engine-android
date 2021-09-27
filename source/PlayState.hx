@@ -1029,9 +1029,7 @@ class PlayState extends MusicBeatState
 		replayTxt.borderQuality = 2;
 		replayTxt.scrollFactor.set();
 		if (loadRep)
-		{
 			add(replayTxt);
-		}
 		// Literally copy-paste of the above, fu
 		botPlayState = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 75, healthBarBG.y + (PlayStateChangeables.useDownscroll ? 100 : -100), 0, "BOTPLAY", 20);
 		botPlayState.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -1082,9 +1080,6 @@ class PlayState extends MusicBeatState
 			FlxG.cameras.add(camcontrol);
 			camcontrol.bgColor.alpha = 0;
 			mcontrols.cameras = [camcontrol];
-
-			//mcontrols.visible = false;
-			mcontrols.alpha = 0;
 
 			add(mcontrols);
 		#end
@@ -1253,20 +1248,6 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
-		#if mobileC
-		//mcontrols.visible = true;
-		new FlxTimer().start(0.1, function(tmr:FlxTimer)
-		{
-			mcontrols.alpha += 0.1;
-			if (mcontrols.alpha != 0.7){
-				tmr.reset(0.1);
-			}
-			else{
-				trace('aweseom.');
-			}
-		});
-		#end
-
 		inCutscene = false;
 
 		generateStaticArrows(0);
@@ -2699,20 +2680,6 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
-		#if mobileC
-		//aaa
-		new FlxTimer().start(0.1, function(tmr:FlxTimer)
-		{
-			mcontrols.alpha -= 0.1;
-			if (mcontrols.alpha != 0){
-				tmr.reset(0.1);
-			}
-			else{
-				trace('aweseom.');
-			}
-		});
-		#end
-
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
 		/*if (useVideo)
 			{
@@ -2725,6 +2692,7 @@ class PlayState extends MusicBeatState
 		if (isStoryMode)
 			campaignMisses = misses;
 
+		#if desktop
 		if (!loadRep)
 			rep.SaveReplay(saveNotes, saveJudge, replayAna);
 		else
@@ -2733,6 +2701,7 @@ class PlayState extends MusicBeatState
 			PlayStateChangeables.scrollSpeed = 1;
 			PlayStateChangeables.useDownscroll = false;
 		}
+		#end
 
 		if (FlxG.save.data.fpsCap > 290)
 			(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
