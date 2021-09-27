@@ -102,8 +102,10 @@ class PlayState extends MusicBeatState
 	var halloweenLevel:Bool = false;
 
 	var songLength:Float = 0;
-	var kadeEngineWatermark:FlxText;
-	
+	var optionsWatermark:FlxText;
+	var versionWatermark:FlxText;
+	var songWatermark:FlxText;
+
 	#if windows
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -1001,14 +1003,32 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(healthBar);
 
-		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " - " + CoolUtil.difficultyFromInt(storyDifficulty) + (Main.watermarks ? " | KE " + Application.current.meta.get('version') : ""), 16);
-		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-		kadeEngineWatermark.scrollFactor.set();
-		add(kadeEngineWatermark);
+		// Add watermarks
+		optionsWatermark = new FlxText(4, (PlayStateChangeables.safeFrames != 10 ? "SF " + PlayStateChangeables.safeFrames + " | " : "")
+		+ (FlxG.save.data.ghost ? "GhosTap | " : "")
+		+ (PlayStateChangeables.scrollSpeed == 1 ? "Speed " + SONG.speed : "Speed " + PlayStateChangeables.scrollSpeed + " ("+ SONG.speed + ")"));
+		versionWatermark = new FlxText(4, "KE Android " + Application.current.meta.get('version'), 16);
+		songWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " - " + CoolUtil.difficultyFromInt(storyDifficulty), 16);
 
-		if (PlayStateChangeables.useDownscroll)
-			kadeEngineWatermark.y = FlxG.height * 0.9 + 45;
+		optionsWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		versionWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		songWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+
+		optionsWatermark.scrollFactor.set();
+		versionWatermark.scrollFactor.set();
+		songWatermark.scrollFactor.set();
+
+		if (FlxG.save.data.watermark)
+			optionsWatermark.y = FlxG.height * 0.91 + 11;
+		else
+			optionsWatermark.y = FlxG.height * 0.91 + 28;
+		versionWatermark.y = FlxG.height * 0.91 + 28;
+		songWatermark.y = FlxG.height * 0.91 + 45;
+
+		add(optionsWatermark);
+		if (FlxG.save.data.watermark)
+			add(versionWatermark);
+		add(songWatermark);
 
 		scoreTxt = new FlxText(FlxG.width / 2 - 235, healthBarBG.y + 50, 0, "", 20);
 
@@ -1059,7 +1079,9 @@ class PlayState extends MusicBeatState
 			songPosBG.cameras = [camHUD];
 			songPosBar.cameras = [camHUD];
 		}
-		kadeEngineWatermark.cameras = [camHUD];
+		optionsWatermark.cameras = [camHUD];
+		versionWatermark.cameras = [camHUD];
+		songWatermark.cameras = [camHUD];
 		if (loadRep)
 			replayTxt.cameras = [camHUD];
 
@@ -1950,7 +1972,9 @@ class PlayState extends MusicBeatState
 			if (luaModchart.getVar("showOnlyStrums",'bool'))
 			{
 				healthBarBG.visible = false;
-				kadeEngineWatermark.visible = false;
+				optionsWatermark.visible = false;
+				versionWatermark.visible = false;
+				songWatermark.visible = false;
 				healthBar.visible = false;
 				iconP1.visible = false;
 				iconP2.visible = false;
@@ -1959,7 +1983,9 @@ class PlayState extends MusicBeatState
 			else
 			{
 				healthBarBG.visible = true;
-				kadeEngineWatermark.visible = true;
+				optionsWatermark.visible = true;
+				versionWatermark.visible = true;
+				songWatermark.visible = true;
 				healthBar.visible = true;
 				iconP1.visible = true;
 				iconP2.visible = true;
