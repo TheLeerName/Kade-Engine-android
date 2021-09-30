@@ -2,7 +2,11 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="FNF: Kade Engine" file="KadeEngine" packageName="com.kadedev.kadeengine" package="com.kadedev.kadeengine" main="Main" version="1.0.1-nightly1" company="kadedev" />
+	<app title="FNF: Kade Engine" file="KadeEngine" main="Main" version="1.0.1-nightly2"
+	packageName="com.kadedev.kadeengine" package="com.kadedev.kadeengine" company="kadedev" />
+<!--NOTE: If you make a mod then be sure to change the package (NOT packageName)
+	otherwise the mod will be replace original kade engine port!
+-->
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />

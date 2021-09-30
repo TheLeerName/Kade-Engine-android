@@ -1628,7 +1628,8 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+				var daType = songNotes[3];
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, daType);
 
 				// if you hide these two lines, then the opponent arrows will go right in the same place as yours
 				if (!gottaHitNote && FlxG.save.data.middlescroll)
@@ -1663,9 +1664,6 @@ class PlayState extends MusicBeatState
 				if (swagNote.mustPress)
 				{
 					swagNote.x += FlxG.width / 2; // general offset
-				}
-				else
-				{
 				}
 			}
 			daBeats += 1;
@@ -2632,12 +2630,13 @@ class PlayState extends MusicBeatState
 							daNote.angle = strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].angle;
 						daNote.alpha = strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].alpha;
 					}
-					
-					
+
+					// direction correction of burn note
+					daNote.x -= (daNote.noteType == "burning" ? 50 : 0);
+					daNote.y -= (daNote.noteType == "burning" ? 65 : 0);
 
 					if (daNote.isSustainNote)
 						daNote.x += daNote.width / 2 + 17;
-					
 
 					//trace(daNote.y);
 					// WIP interpolation shit? Need to fix the pause issue
@@ -2657,7 +2656,10 @@ class PlayState extends MusicBeatState
 									// im tired and lazy this sucks I know i'm dumb
 									if (findByTime(daNote.strumTime) != null)
 										totalNotesHit += 1;
-									else
+									// when you miss a custom notes
+									if (daNote.noteType == "burning")
+										trace("dodge lol");
+									else 
 									{
 										health -= 0.075;
 										vocals.volume = 0;
@@ -2667,10 +2669,16 @@ class PlayState extends MusicBeatState
 								}
 								else
 								{
+									// when you miss a custom notes
+									if (daNote.noteType == "burning")
+										trace("dodge lol");
+									else
+									{
 									health -= 0.075;
 									vocals.volume = 0;
 									if (theFunne)
 										noteMiss(daNote.noteData, daNote);
+									}
 								}
 							}
 		
@@ -2901,38 +2909,71 @@ class PlayState extends MusicBeatState
 
 			switch(daRating)
 			{
+				// when you press on a custom notes
 				case 'shit':
-					score = -300;
-					combo = 0;
-					misses++;
-					health -= 0.2;
-					ss = false;
-					shits++;
-					if (FlxG.save.data.accuracyMod == 0)
-						totalNotesHit -= 1;
+					if (daNote.noteType == "burning")
+					{
+						health -= 0.45;
+						FlxG.sound.play(Paths.sound('burnSound'));
+					}
+					else
+					{
+						score = -300;
+						combo = 0;
+						misses++;
+						health -= 0.2;
+						ss = false;
+						shits++;
+						if (FlxG.save.data.accuracyMod == 0)
+							totalNotesHit -= 1;
+					}
 				case 'bad':
-					daRating = 'bad';
-					score = 0;
-					health -= 0.06;
-					ss = false;
-					bads++;
-					if (FlxG.save.data.accuracyMod == 0)
-						totalNotesHit += 0.50;
+					if (daNote.noteType == "burning")
+					{
+						health -= 0.45;
+						FlxG.sound.play(Paths.sound('burnSound'));
+					}
+					else
+					{
+						daRating = 'bad';
+						score = 0;
+						health -= 0.06;
+						ss = false;
+						bads++;
+						if (FlxG.save.data.accuracyMod == 0)
+							totalNotesHit += 0.50;
+					}
 				case 'good':
-					daRating = 'good';
-					score = 200;
-					ss = false;
-					goods++;
-					if (health < 2)
-						health += 0.04;
-					if (FlxG.save.data.accuracyMod == 0)
-						totalNotesHit += 0.75;
+					if (daNote.noteType == "burning")
+					{
+						health -= 0.45;
+						FlxG.sound.play(Paths.sound('burnSound'));
+					}
+					else
+					{
+						daRating = 'good';
+						score = 200;
+						ss = false;
+						goods++;
+						if (health < 2)
+							health += 0.04;
+						if (FlxG.save.data.accuracyMod == 0)
+							totalNotesHit += 0.75;
+					}
 				case 'sick':
-					if (health < 2)
-						health += 0.1;
-					if (FlxG.save.data.accuracyMod == 0)
-						totalNotesHit += 1;
-					sicks++;
+					if (daNote.noteType == "burning")
+					{
+						health -= 0.45;
+						FlxG.sound.play(Paths.sound('burnSound'));
+					}
+					else
+					{
+						if (health < 2)
+							health += 0.1;
+						if (FlxG.save.data.accuracyMod == 0)
+							totalNotesHit += 1;
+						sicks++;
+					}
 			}
 
 			// trace('Wife accuracy loss: ' + wife + ' | Rating: ' + daRating + ' | Score: ' + score + ' | Weight: ' + (1 - wife));
@@ -3333,7 +3374,8 @@ class PlayState extends MusicBeatState
 									goodNoteHit(daNote);
 									boyfriend.holdTimer = daNote.sustainLength;
 								}
-							}else {
+								// botplay taps only default notes (custom notes)
+							}else if (daNote.noteType == "") {
 								goodNoteHit(daNote);
 								boyfriend.holdTimer = daNote.sustainLength;
 							}

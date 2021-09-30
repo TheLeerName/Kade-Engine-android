@@ -26,6 +26,7 @@ class Note extends FlxSprite
 	public var modifiedByLua:Bool = false;
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
+	public var noteType:String = ""; // default
 
 	public var noteScore:Float = 1;
 
@@ -37,87 +38,113 @@ class Note extends FlxSprite
 
 	public var rating:String = "shit";
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inCharter:Bool = false)
-	{
-		super();
-
-		if (prevNote == null)
-			prevNote = this;
-
-		this.prevNote = prevNote;
-		isSustainNote = sustainNote;
-
-		x += 50;
-		// MAKE SURE ITS DEFINITELY OFF SCREEN?
-		y -= 2000;
-		if (inCharter)
-			this.strumTime = strumTime;
-		else 
-			this.strumTime = Math.round(strumTime);
-
-		if (this.strumTime < 0 )
-			this.strumTime = 0;
-
-		this.noteData = noteData;
-
-		var daStage:String = PlayState.curStage;
-
-		//defaults if no noteStyle was found in chart
-		var noteTypeCheck:String = 'normal';
-
-		if (PlayState.SONG.noteStyle == null) {
-			switch(PlayState.storyWeek) {case 6: noteTypeCheck = 'pixel';}
-		} else {noteTypeCheck = PlayState.SONG.noteStyle;}
-
-		switch (noteTypeCheck)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?noteType:String = "")
 		{
-			case 'pixel':
-				loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels','week6'), true, 17, 17);
+			super();
+ 
+			if (prevNote == null)
+				prevNote = this;
+			this.noteType = noteType;
+			this.prevNote = prevNote;
+			isSustainNote = sustainNote;
+ 
+			x += 50;
+			// MAKE SURE ITS DEFINITELY OFF SCREEN?
+			y -= 2000;
+			this.strumTime = strumTime;
+ 
+			if (this.strumTime < 0 )
+				this.strumTime = 0;
 
-				animation.add('greenScroll', [6]);
-				animation.add('redScroll', [7]);
-				animation.add('blueScroll', [5]);
-				animation.add('purpleScroll', [4]);
+			this.noteData = noteData;
+ 
+			var daStage:String = PlayState.curStage;
+ 
+			switch (PlayState.SONG.noteStyle)
+			{
+				case 'pixel':
+					loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels','week6'), true, 17, 17);
+ 
+					if (noteType == "burning")
+					{
+						loadGraphic(Paths.image('NOTE_fire-pixel'), true, 21, 31);
+					
+						animation.add('greenScroll', [6, 7, 6, 8], 8);
+						animation.add('redScroll', [9, 10, 9, 11], 8);
+						animation.add('blueScroll', [3, 4, 3, 5], 8);
+						animation.add('purpleScroll', [0, 1 ,0, 2], 8);
+						x -= 15;
+					}
+					else
+					{
+						animation.add('greenScroll', [6]);
+						animation.add('redScroll', [7]);
+						animation.add('blueScroll', [5]);
+						animation.add('purpleScroll', [4]);
+					}
+ 
+					if (isSustainNote)
+					{
+						loadGraphic(Paths.image('weeb/pixelUI/arrowEnds','week6'), true, 7, 6);
+ 
+						animation.add('purpleholdend', [4]);
+						animation.add('greenholdend', [6]);
+						animation.add('redholdend', [7]);
+						animation.add('blueholdend', [5]);
+ 
+						animation.add('purplehold', [0]);
+						animation.add('greenhold', [2]);
+						animation.add('redhold', [3]);
+						animation.add('bluehold', [1]);
+					}
+ 
+					setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+					updateHitbox();
+				default:
+						frames = Paths.getSparrowAtlas('NOTE_assets');
+						/*var fuckingSussy = Paths.getSparrowAtlas('NOTE_fire');
+						for(amogus in fuckingSussy.frames)
+							{
+								this.frames.pushFrame(amogus);
+							}*/
+ 
+						switch (noteType)
+						{
+							case "burning":
+							{
+								frames = Paths.getSparrowAtlas('NOTE_fire');
+								animation.addByPrefix('blueScroll', 'blue fire');
+								animation.addByPrefix('greenScroll', 'green fire');
+								animation.addByPrefix('redScroll', 'red fire');
+								animation.addByPrefix('purpleScroll', 'purple fire');
 
-				if (isSustainNote)
-				{
-					loadGraphic(Paths.image('weeb/pixelUI/arrowEnds','week6'), true, 7, 6);
-
-					animation.add('purpleholdend', [4]);
-					animation.add('greenholdend', [6]);
-					animation.add('redholdend', [7]);
-					animation.add('blueholdend', [5]);
-
-					animation.add('purplehold', [0]);
-					animation.add('greenhold', [2]);
-					animation.add('redhold', [3]);
-					animation.add('bluehold', [1]);
-				}
-
-				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
-				updateHitbox();
-			default:
-				frames = Paths.getSparrowAtlas('NOTE_assets');
-
-				animation.addByPrefix('greenScroll', 'green0');
-				animation.addByPrefix('redScroll', 'red0');
-				animation.addByPrefix('blueScroll', 'blue0');
-				animation.addByPrefix('purpleScroll', 'purple0');
-
-				animation.addByPrefix('purpleholdend', 'pruple end hold');
-				animation.addByPrefix('greenholdend', 'green hold end');
-				animation.addByPrefix('redholdend', 'red hold end');
-				animation.addByPrefix('blueholdend', 'blue hold end');
-
-				animation.addByPrefix('purplehold', 'purple hold piece');
-				animation.addByPrefix('greenhold', 'green hold piece');
-				animation.addByPrefix('redhold', 'red hold piece');
-				animation.addByPrefix('bluehold', 'blue hold piece');
-
-				setGraphicSize(Std.int(width * 0.7));
-				updateHitbox();
-				antialiasing = true;
-		}
+								//if(FlxG.save.data.downscroll)
+									//flipY = true;
+								x -= 50;
+							}
+							default:
+							{
+								frames = Paths.getSparrowAtlas('NOTE_assets');
+								animation.addByPrefix('greenScroll', 'green0');
+								animation.addByPrefix('redScroll', 'red0');
+								animation.addByPrefix('blueScroll', 'blue0');
+								animation.addByPrefix('purpleScroll', 'purple0');
+ 
+								animation.addByPrefix('purpleholdend', 'pruple end hold');
+								animation.addByPrefix('greenholdend', 'green hold end');
+								animation.addByPrefix('redholdend', 'red hold end');
+								animation.addByPrefix('blueholdend', 'blue hold end');
+ 
+								animation.addByPrefix('purplehold', 'purple hold piece');
+								animation.addByPrefix('greenhold', 'green hold piece');
+								animation.addByPrefix('redhold', 'red hold piece');
+								animation.addByPrefix('bluehold', 'blue hold piece');
+							}
+						}
+						setGraphicSize(Std.int(width * 0.7));
+						updateHitbox();
+						antialiasing = true;
+			}
 
 		switch (noteData)
 		{
@@ -200,24 +227,35 @@ class Note extends FlxSprite
 
 		if (mustPress)
 		{
-			// ass
-			if (isSustainNote)
-			{
-				if (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * 1.5)
-					&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
-					canBeHit = true;
+			// The * 0.5 is so that it's easier to hit them too late, instead of too early
+			if (noteType == "")
+				{
+					if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset
+						&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
+						canBeHit = true;
+					else
+						canBeHit = false;
+				}
 				else
-					canBeHit = false;
-			}
-			else
-			{
-				if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset
-					&& strumTime < Conductor.songPosition + Conductor.safeZoneOffset)
-					canBeHit = true;
-				else
-					canBeHit = false;
-			}
-
+				{
+					/*if (PlayState.curStage == 'auditorHell') // these though, REALLY hard to hit.
+					{
+						if (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * 0.3)
+							&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.2)) // also they're almost impossible to hit late!
+							canBeHit = true;
+						else
+							canBeHit = false;
+					}
+					else
+					{*/
+					// make burning notes a lot harder to accidently hit because they're weirdchamp!
+						if (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * 0.6)
+							&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.4)) // also they're almost impossible to hit late!
+							canBeHit = true;
+						else
+							canBeHit = false;
+					//}
+				}
 			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset * Conductor.timeScale && !wasGoodHit)
 				tooLate = true;
 		}
