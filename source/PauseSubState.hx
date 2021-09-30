@@ -4,6 +4,7 @@ import flixel.input.gamepad.FlxGamepad;
 import openfl.Lib;
 #if windows
 import llua.Lua;
+import Discord.DiscordClient;
 #end
 import Controls.Control;
 import flixel.FlxG;
@@ -22,7 +23,7 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'debug menu', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart song', 'Debug menu', 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -115,6 +116,15 @@ class PauseSubState extends MusicBeatSubstate
 		/*if (PlayState.instance.useVideo)
 			menuItems.remove('Resume');*/
 
+		// pre lowercasing the song name (update)
+		#if windows
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+		switch (songLowercase) {
+			case 'dad-battle': songLowercase = 'dadbattle';
+			case 'philly-nice': songLowercase = 'philly';
+		}
+		#end
+
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
 		var upP = controls.UP_P;
@@ -135,13 +145,6 @@ class PauseSubState extends MusicBeatSubstate
 			leftP = gamepad.justPressed.DPAD_LEFT;
 			rightP = gamepad.justPressed.DPAD_RIGHT;
 			#end
-		}
-
-		// pre lowercasing the song name (update)
-		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-		switch (songLowercase) {
-			case 'dad-battle': songLowercase = 'dadbattle';
-			case 'philly-nice': songLowercase = 'philly';
 		}
 
 		if (upP)
@@ -242,7 +245,7 @@ class PauseSubState extends MusicBeatSubstate
 			{
 				case "Resume":
 					close();
-				case "Restart Song":
+				case "Restart song":
 					/*if (PlayState.instance.useVideo)
 					{
 						GlobalVideo.get().stop();
@@ -250,7 +253,7 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.instance.removedVideo = true;
 					}*/
 					FlxG.resetState();
-				case "debug menu":
+				case "Debug menu":
 					/*if (useVideo)
 					{
 					GlobalVideo.get().stop();
@@ -263,11 +266,11 @@ class PauseSubState extends MusicBeatSubstate
 					//FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
 					#if windows
 					DiscordClient.changePresence("Chart Editor", null, null, true);
-					if (luaModchart != null)
-						{
-							luaModchart.die();
-							luaModchart = null;
-						}
+					if (PlayState.luaModchart != null)
+					{
+						PlayState.luaModchart.die();
+						PlayState.luaModchart = null;
+					}
 					#end
 				case "Exit to menu":
 					/*if (PlayState.instance.useVideo)
