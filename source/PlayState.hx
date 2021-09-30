@@ -1007,7 +1007,7 @@ class PlayState extends MusicBeatState
 		optionsWatermark = new FlxText(4, (PlayStateChangeables.safeFrames != 10 ? "SF " + PlayStateChangeables.safeFrames + " | " : "")
 		+ (FlxG.save.data.ghost ? "GhosTap | " : "")
 		+ (PlayStateChangeables.scrollSpeed == 1 ? "Speed " + SONG.speed : "Speed " + PlayStateChangeables.scrollSpeed + " ("+ SONG.speed + ")"));
-		versionWatermark = new FlxText(4, "KE Android " + Application.current.meta.get('version'), 16);
+		versionWatermark = new FlxText(4, #if mobileC "KE Android " + Application.current.meta.get('version') #else "Kade Engine 1.5.4" #end, 16);
 		songWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " - " + CoolUtil.difficultyFromInt(storyDifficulty), 16);
 
 		optionsWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
