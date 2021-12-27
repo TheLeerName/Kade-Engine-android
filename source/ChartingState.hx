@@ -534,7 +534,7 @@ class ChartingState extends MusicBeatState
 
 		var applyLength:FlxButton = new FlxButton(10, 100, 'Apply Data');
 
-		burnNote = new FlxUICheckBox(10, 20, null, null, "Put burn note?", 100);
+		burnNote = new FlxUICheckBox(10, 25, null, null, "Put burn note?", 100);
 		burnNote.checked = false;
 		tab_group_note.add(burnNote);
 
