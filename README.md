@@ -14,6 +14,10 @@ Links: **[GameBanana mod page](https://gamebanana.com/gamefiles/16761) ⋅ [play
 If you're looking for documentation, changelogs, or guides, you can find those on the Kade Engine website.
 ### Btw this fork does not use `actuate`, `extension-webm`, `polymod`
 
+## Important fixes of compile errors
+- `C:/HaxeToolkit/haxe/lib/flixel/4,10,0/flixel/input/actions/FlxAction.hx:141: characters 18-46 : Type not found : FlxActionInputDigitalAndroid`, [**click here**](https://gist.github.com/JOELwindows7/118b3a40a76d60e701399a61fb5e1c2d)
+- `source/Controls.hx:307: characters 10-17 : Array access is not allowed on {+ length : Int }`, [**update Haxe to latest version (4.2.4)**](https://haxe.org/download/version/4.2.4/)
+
 ## Friday Night Funkin'
 **Friday Night Funkin'** is a rhythm game originally made for Ludum Dare 47 "Stuck In a Loop".
 
