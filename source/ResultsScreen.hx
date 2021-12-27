@@ -37,7 +37,9 @@ class ResultsScreen extends MusicBeatSubstate
     public var graphSprite:OFLSprite;
 
     public var comboText:FlxText;
+    #if !mobileC
     public var contText:FlxText;
+    #end
     public var settingsText:FlxText;
 
     public var music:FlxSound;
@@ -80,12 +82,14 @@ class ResultsScreen extends MusicBeatSubstate
         comboText.scrollFactor.set();
         add(comboText);
 
-        contText = new FlxText(FlxG.width - 475,FlxG.height + 50,0,'Press ' + #if !mobileC ${KeyBinds.gamepad ? 'A' : 'ENTER'} #else 'A' #end + ' to continue.');
+        #if !mobileC
+        contText = new FlxText(FlxG.width - 475,FlxG.height + 50,0,'Press ' + ${KeyBinds.gamepad ? 'A' : 'ENTER'} + ' to continue.');
         contText.size = 28;
         contText.setBorderStyle(FlxTextBorderStyle.OUTLINE,FlxColor.BLACK,4,1);
         contText.color = FlxColor.WHITE;
         contText.scrollFactor.set();
         add(contText);
+        #end
 
         anotherBackground = new FlxSprite(FlxG.width - 500,45).makeGraphic(450,240,FlxColor.BLACK);
         anotherBackground.scrollFactor.set();
@@ -148,7 +152,9 @@ class ResultsScreen extends MusicBeatSubstate
         FlxTween.tween(background, {alpha: 0.5},0.5);
         FlxTween.tween(text, {y:20},0.5,{ease: FlxEase.expoInOut});
         FlxTween.tween(comboText, {y:145},0.5,{ease: FlxEase.expoInOut});
+        #if !mobileC
         FlxTween.tween(contText, {y:FlxG.height - 45},0.5,{ease: FlxEase.expoInOut});
+        #end
         FlxTween.tween(settingsText, {y:FlxG.height - 35},0.5,{ease: FlxEase.expoInOut});
         FlxTween.tween(anotherBackground, {alpha: 0.6},0.5, {onUpdate: function(tween:FlxTween) {
             graph.alpha = FlxMath.lerp(0,1,tween.percent);
@@ -156,10 +162,6 @@ class ResultsScreen extends MusicBeatSubstate
         }});
 
         cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-
-        #if mobileC
-        addVirtualPad(NONE, A);
-        #end
 
 		super.create();
 	}
@@ -169,12 +171,24 @@ class ResultsScreen extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
-        if (music.volume < 0.5)
+        if (music != null && music.volume < 0.5)
 			music.volume += 0.01 * elapsed;
 
         // keybinds
 
-        if (PlayerSettings.player1.controls.ACCEPT)
+        var pressedEnter:Bool = controls.ACCEPT;
+
+		#if mobile
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				pressedEnter = true;
+			}
+		}
+		#end
+
+        if (pressedEnter)
         {
             music.fadeOut(0.3);
             
