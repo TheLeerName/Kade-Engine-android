@@ -1,3 +1,5 @@
+# bruh why you guys forking this shit, just use the jigsaw's port
+
 ![Kade Engine logo](assets/preload/images/KadeEngineLogo.png)
 
 # Friday Night Funkin': Kade Engine Android port
