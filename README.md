@@ -1,4 +1,5 @@
-# bruh why you guys forking this shit, just use the jigsaw's port
+# bruh why you guys forking this shit, just use the [jigsaw's port](https://github.com/jigsaw-4277821/PE-0.5.2h-Android)
+# i not interested to update this repo, so i archive it <3
 
 ![Kade Engine logo](assets/preload/images/KadeEngineLogo.png)
 
